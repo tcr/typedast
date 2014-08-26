@@ -1,0 +1,16 @@
+{
+  "name": "typedacorn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "typedacorn.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "jake -f ./TypeScript/Jakefile -C ./TypeScript local > /dev/null"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "acorn": "^0.7.0",
+    "split": "^0.3.0"
+  }
+}
