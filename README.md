@@ -2,7 +2,7 @@
 
 The acorn.js parser, but using **ALL OF TYPESCRIPT** to analyze and give types to AST nodes.
 
-```
+```js
 var typedacorn = require('typedacorn');
 var acorn = typedacorn.acorn; // optional
 var walk = typedacorn.walk; // optional

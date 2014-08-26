@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "jake -f ./TypeScript/Jakefile -C ./TypeScript local > /dev/null"
   },
+  "repository": "tcr/typedacorn",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "acorn": "^0.7.0",
     "split": "^0.3.0"
