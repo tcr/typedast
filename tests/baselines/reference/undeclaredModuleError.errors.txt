@@ -1,0 +1,23 @@
+==== tests/cases/compiler/undeclaredModuleError.ts (3 errors) ====
+    import fs = require('fs');
+                        ~~~~
+!!! Cannot find external module 'fs'.
+    function readdir(path: string, accept: (stat: fs.Stats, name: string) => boolean, callback: (error: Error, results: { name: string; stat: fs.Stats; }[]) => void ) {}
+    
+    function join(...paths: string[]) {}
+    
+    function instrumentFile(covFileDir: string, covFileName: string, originalFilePath: string) {
+        fs.readFile(originalFilePath, () => {       
+            readdir(covFileDir, () => {
+                                ~~~~~~~
+            } , (error: Error, files: {}[]) => {
+    ~~~~~~~~~
+!!! Argument of type '() => void' is not assignable to parameter of type '(stat: unknown, name: string) => boolean'.
+                    files.forEach((file) => {
+                        var fullPath = join(IDoNotExist);
+                                            ~~~~~~~~~~~
+!!! Cannot find name 'IDoNotExist'.
+                    } );
+                } );
+        } );
+    }

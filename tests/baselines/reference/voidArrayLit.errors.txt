@@ -1,0 +1,8 @@
+==== tests/cases/compiler/voidArrayLit.ts (1 errors) ====
+    var va = [(() => {})()]; // ok
+    (() => {})(); // ok
+    function foo(s:string) {}
+    foo((()=>{})()); // error
+        ~~~~~~~~~~
+!!! Argument of type 'void' is not assignable to parameter of type 'string'.
+    

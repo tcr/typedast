@@ -1,0 +1,8 @@
+==== tests/cases/conformance/statements/withStatements/withStatements.ts (1 errors) ====
+    var x = 12;
+    with (x) {
+          ~
+!!! All symbols within a 'with' block will be resolved to 'any'.
+        name = 'twelve'
+        id = 12
+    }

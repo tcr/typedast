@@ -1,0 +1,6 @@
+==== tests/cases/conformance/parser/ecmascript5/MemberAccessorDeclarations/parserMemberAccessorDeclaration2.ts (1 errors) ====
+    class C {
+      get "b"() { }
+          ~~~
+!!! A 'get' accessor must return a value or consist of a single 'throw' statement.
+    }

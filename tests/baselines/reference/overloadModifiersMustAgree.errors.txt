@@ -1,0 +1,24 @@
+==== tests/cases/compiler/overloadModifiersMustAgree.ts (4 errors) ====
+    class baz {
+        public foo();
+               ~~~
+!!! Overload signatures must all be public or private.
+        private foo(bar?: any) { } // error - access modifiers do not agree
+    }
+    
+    declare function bar();
+                     ~~~
+!!! Overload signatures must all be ambient or non-ambient.
+    export function bar(s: string);
+                    ~~~
+!!! Overload signatures must all be exported or not exported.
+    function bar(s?: string) { }
+    
+    interface I {
+        foo? ();
+        foo(s: string);
+        ~~~
+!!! Overload signatures must all be optional or required.
+    }
+    
+    

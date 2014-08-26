@@ -1,0 +1,28 @@
+==== tests/cases/compiler/augmentedTypeAssignmentCompatIndexSignature.ts (2 errors) ====
+    interface Foo { a }
+    interface Bar { b }
+    
+    interface Object {
+        [n: number]: Foo;
+    }
+    
+    interface Function {
+        [n: number]: Bar;
+    }
+    
+    var o = {};
+    var f = () => { };
+    
+    var v1: {
+        ~~
+!!! Type '{}' is not assignable to type '{ [x: number]: Foo; }':
+!!!   Index signature is missing in type '{}'.
+        [n: number]: Foo
+    } = o; // Should be allowed
+    
+    var v2: {
+        ~~
+!!! Type '() => void' is not assignable to type '{ [x: number]: Bar; }':
+!!!   Index signature is missing in type '() => void'.
+        [n: number]: Bar
+    } = f; // Should be allowed

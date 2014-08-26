@@ -1,0 +1,46 @@
+==== tests/cases/conformance/parser/ecmascript5/ErrorRecovery/parserErrantSemicolonInClass1.ts (5 errors) ====
+    class a {
+        //constructor ();
+        constructor (n: number);
+        constructor (s: string);
+        constructor (ns: any) {
+    
+        }
+    
+        public pgF() { };
+                        ~
+!!! Unexpected token. A constructor, method, accessor, or property was expected.
+    
+        public pv;
+        public get d() {
+                   ~
+!!! Accessors are only available when targeting ECMAScript 5 and higher.
+            return 30;
+        }
+        public set d() {
+                   ~
+!!! Accessors are only available when targeting ECMAScript 5 and higher.
+        }
+    
+        public static get p2() {
+                          ~~
+!!! Accessors are only available when targeting ECMAScript 5 and higher.
+            return { x: 30, y: 40 };
+        }
+    
+        private static d2() {
+        }
+        private static get p3() {
+                           ~~
+!!! Accessors are only available when targeting ECMAScript 5 and higher.
+            return "string";
+        }
+        private pv3;
+    
+        private foo(n: number): string;
+        private foo(s: string): string;
+        private foo(ns: any) {
+            return ns.toString();
+        }
+    }
+    

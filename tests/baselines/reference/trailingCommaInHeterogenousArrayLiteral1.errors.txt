@@ -1,0 +1,16 @@
+==== tests/cases/compiler/trailingCommaInHeterogenousArrayLiteral1.ts (2 errors) ====
+    class arrTest {
+        test(arg1: number[]) {    }
+        callTest() {
+            // these two should give the same error
+            this.test([1, 2, "hi", 5, ]);
+                      ~~~~~~~~~~~~~~~~~
+!!! Argument of type '{}[]' is not assignable to parameter of type 'number[]'.
+!!!   Type '{}' is not assignable to type 'number'.
+            this.test([1, 2, "hi", 5]); 
+                      ~~~~~~~~~~~~~~~
+!!! Argument of type '{}[]' is not assignable to parameter of type 'number[]'.
+!!!   Type '{}' is not assignable to type 'number'.
+        }
+    }
+    
