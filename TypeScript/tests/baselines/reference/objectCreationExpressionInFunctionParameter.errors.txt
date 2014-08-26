@@ -1,0 +1,11 @@
+==== tests/cases/compiler/objectCreationExpressionInFunctionParameter.ts (2 errors) ====
+    class A {
+        constructor(public a1: string) {
+        }
+    }
+    function foo(x = new A(123)) { //should error, 123 is not string
+                           ~~~
+!!! Argument of type 'number' is not assignable to parameter of type 'string'.
+    }}
+     ~
+!!! Declaration or statement expected.

@@ -1,0 +1,5 @@
+==== tests/cases/compiler/FunctionDeclaration4.ts (1 errors) ====
+    function foo();
+    function bar() { }
+             ~~~
+!!! Function implementation name must be 'foo'.

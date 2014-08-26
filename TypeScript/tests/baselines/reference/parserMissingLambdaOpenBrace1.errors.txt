@@ -1,0 +1,19 @@
+==== tests/cases/conformance/parser/ecmascript5/ErrorRecovery/parserMissingLambdaOpenBrace1.ts (5 errors) ====
+    class C {
+        where(filter: Iterator<T, boolean>): Query<T> {
+                      ~~~~~~~~~~~~~~~~~~~~
+!!! Cannot find name 'Iterator'.
+                                             ~~~~~~~~
+!!! Cannot find name 'Query'.
+            return fromDoWhile(test =>
+                   ~~~~~~~~~~~
+!!! Cannot find name 'fromDoWhile'.
+                var index = 0;
+                ~~~
+!!! '{' expected.
+                return this.doWhile((item, i) => filter(item, i) ? test(item, index++) : true);
+                            ~~~~~~~
+!!! Property 'doWhile' does not exist on type 'C'.
+            });
+        }
+    }

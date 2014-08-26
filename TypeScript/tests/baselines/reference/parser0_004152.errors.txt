@@ -1,0 +1,73 @@
+==== tests/cases/conformance/parser/ecmascript5/Fuzz/parser0_004152.ts (34 errors) ====
+    export class Game {
+                 ~~~~
+!!! Cannot compile external modules unless the '--module' flag is provided.
+        private position = new DisplayPosition([), 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3, 3, 0], NoMove, 0);
+                                                ~
+!!! Expression or comma expected.
+                                                 ~
+!!! ';' expected.
+                                                    ~
+!!! ';' expected.
+                                                       ~
+!!! ';' expected.
+                                                          ~
+!!! ';' expected.
+                                                             ~
+!!! ';' expected.
+                                                                ~
+!!! ';' expected.
+                                                                   ~
+!!! ';' expected.
+                                                                      ~
+!!! ';' expected.
+                                                                         ~
+!!! ';' expected.
+                                                                            ~
+!!! ';' expected.
+                                                                               ~
+!!! ';' expected.
+                                                                                  ~
+!!! ';' expected.
+                                                                                     ~
+!!! ';' expected.
+                                                                                        ~
+!!! ';' expected.
+                                                                                         ~
+!!! Unexpected token. A constructor, method, accessor, or property was expected.
+                                                                                                 ~
+!!! ';' expected.
+                                                                                                    ~
+!!! ';' expected.
+                                                                                                     ~
+!!! Unexpected token. A constructor, method, accessor, or property was expected.
+                               ~~~~~~~~~~~~~~~
+!!! Cannot find name 'DisplayPosition'.
+                                                      ~
+!!! Duplicate identifier '3'.
+                                                         ~
+!!! Duplicate identifier '3'.
+                                                            ~
+!!! Duplicate identifier '3'.
+                                                               ~
+!!! Duplicate identifier '3'.
+                                                                     ~
+!!! Duplicate identifier '3'.
+                                                                        ~
+!!! Duplicate identifier '3'.
+                                                                           ~
+!!! Duplicate identifier '3'.
+                                                                              ~
+!!! Duplicate identifier '3'.
+                                                                                 ~
+!!! Duplicate identifier '3'.
+                                                                                    ~
+!!! Duplicate identifier '3'.
+                                                                                       ~
+!!! Duplicate identifier '0'.
+                                                                                                   ~
+!!! Duplicate identifier '0'.
+        private prevConfig: SeedCoords[][];
+                            ~~~~~~~~~~
+!!! Cannot find name 'SeedCoords'.
+    }

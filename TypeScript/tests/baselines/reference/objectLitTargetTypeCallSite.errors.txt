@@ -1,0 +1,10 @@
+==== tests/cases/compiler/objectLitTargetTypeCallSite.ts (1 errors) ====
+    function process( x: {a:number; b:string;}) {
+    	return x.a;
+    }
+    
+    process({a:true,b:"y"});
+            ~~~~~~~~~~~~~~
+!!! Argument of type '{ a: boolean; b: string; }' is not assignable to parameter of type '{ a: number; b: string; }'.
+!!!   Types of property 'a' are incompatible:
+!!!     Type 'boolean' is not assignable to type 'number'.

@@ -1,0 +1,7 @@
+==== tests/cases/conformance/parser/ecmascript5/ClassDeclarations/parserClassDeclaration13.ts (1 errors) ====
+    class C {
+       foo();
+       bar() { }
+       ~~~
+!!! Function implementation name must be 'foo'.
+    }

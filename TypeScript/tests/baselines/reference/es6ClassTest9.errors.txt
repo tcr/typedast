@@ -1,0 +1,10 @@
+==== tests/cases/compiler/es6ClassTest9.ts (3 errors) ====
+    declare class foo();
+                     ~
+!!! '{' expected.
+                      ~
+!!! Expression expected.
+    function foo() {}
+             ~~~
+!!! Duplicate identifier 'foo'.
+    

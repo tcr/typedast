@@ -1,0 +1,19 @@
+==== tests/cases/compiler/es6ClassTest3.ts (2 errors) ====
+    module M {	
+    	class Visibility {
+    	    public foo() { };
+    	                    ~
+!!! Unexpected token. A constructor, method, accessor, or property was expected.
+    	    private bar() { };
+    	                     ~
+!!! Unexpected token. A constructor, method, accessor, or property was expected.
+            private x: number;
+    	    public y: number;
+    	    public z: number;
+    
+    	    constructor() {
+    	        this.x = 1;
+    	        this.y = 2;
+    	    }
+    	}
+    }
