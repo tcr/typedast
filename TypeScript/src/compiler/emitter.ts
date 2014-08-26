@@ -1969,6 +1969,23 @@ module ts {
             }
 
             function emitNode(node: Node) {
+
+if (node) {
+  var txt:string;
+  var unwidenedType = resolver.checkExpression(node);
+  var type = resolver.getWidenedType(unwidenedType);
+  if (type.symbol) {
+    txt = type.symbol.name;
+  } else {
+    var localwriter = createTextWriter(writeSymbol);
+    resolver.writeTypeToTextWriter(type, node, TypeFormatFlags.UseTypeOfFunction, localwriter);
+    txt = localwriter.getText();
+  }
+  var startline = writer.getLine();
+  var startcolumn = writer.getColumn();
+}
+
+              var ret = (function () {
                 if (!node || node.flags & NodeFlags.Ambient) return;
                 switch (node.kind) {
                     case SyntaxKind.Identifier:
@@ -2082,6 +2099,18 @@ module ts {
                     case SyntaxKind.SourceFile:
                         return emitSourceFile(<SourceFile>node);
                 }
+
+            })();
+
+if (node) {
+console.log(JSON.stringify({
+  type: txt,
+  start: {line: startline, column: startcolumn },
+  end: {line: writer.getLine(), column: writer.getColumn() }
+}));
+}
+
+            return ret;
             }
 
             function hasDetachedComments(pos: number) {

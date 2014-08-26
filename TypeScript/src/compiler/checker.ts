@@ -7106,11 +7106,17 @@ module ts {
             return getNodeLinks(node).enumMemberValue;
         }
 
-        function writeTypeAtLocation(location: Node, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter) {
+        function getTypeAtLocation(location: Node) {
             // Get type of the symbol if this is the valid symbol otherwise get type at location
             var symbol = getSymbolOfNode(location);
             var type = symbol && !(symbol.flags & SymbolFlags.TypeLiteral) ? getTypeOfSymbol(symbol) : getTypeFromTypeNode(location);
+        }
 
+        function writeTypeAtLocation(location: Node, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter) {
+            // Get type of the symbol if this is the valid symbol otherwise get type at location
+            var symbol = getSymbolOfNode(location);
+            console.log('--->symbol?', symbol);
+            var type = symbol && !(symbol.flags & SymbolFlags.TypeLiteral) ? getTypeOfSymbol(symbol) : getTypeFromTypeNode(location);
             writeTypeToTextWriter(type, enclosingDeclaration, flags, writer);
         }
 
@@ -7132,8 +7138,14 @@ module ts {
                 isTopLevelValueImportedViaEntityName: isTopLevelValueImportedViaEntityName,
                 shouldEmitDeclarations: shouldEmitDeclarations,
                 isDeclarationVisible: isDeclarationVisible,
+                getWidenedType: getWidenedType,
+                writeTypeToTextWriter: writeTypeToTextWriter,
+                checkExpression: checkExpression,
                 isImplementationOfOverload: isImplementationOfOverload,
                 writeTypeAtLocation: writeTypeAtLocation,
+                getSymbolOfNode: getSymbolOfNode,
+                getTypeOfSymbol: getTypeOfSymbol,
+                getTypeFromTypeNode: getTypeFromTypeNode,
                 writeReturnTypeOfSignatureDeclaration: writeReturnTypeOfSignatureDeclaration,
                 writeSymbol: writeSymbolToTextWriter,
                 isSymbolAccessible: isSymbolAccessible,

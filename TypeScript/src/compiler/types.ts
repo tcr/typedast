@@ -655,6 +655,12 @@ module ts {
         getExpressionNamePrefix(node: Identifier): string;
         getPropertyAccessSubstitution(node: PropertyAccess): string;
         getExportAssignmentName(node: SourceFile): string;
+        getSymbolOfNode(node: Node): Symbol;
+        getTypeFromTypeNode(node: TypeNode): Type;
+        getTypeOfSymbol(symbol: Symbol): Type;
+        checkExpression(node: Expression, contextualMapper?: TypeMapper): Type;
+        writeTypeToTextWriter(type: Type, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter): void;
+        getWidenedType(type: Type): Type;
         isReferencedImportDeclaration(node: ImportDeclaration): boolean;
         isTopLevelValueImportedViaEntityName(node: ImportDeclaration): boolean;
         getNodeCheckFlags(node: Node): NodeCheckFlags;
