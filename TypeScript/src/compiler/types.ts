@@ -667,6 +667,8 @@ module ts {
         getEnumMemberValue(node: EnumMember): number;
         shouldEmitDeclarations(): boolean;
         isDeclarationVisible(node: Declaration): boolean;
+        getSignatureFromDeclaration(declaration: SignatureDeclaration): Signature;
+        getReturnTypeOfSignature(signature: Signature): Type;
         isImplementationOfOverload(node: FunctionDeclaration): boolean;
         writeTypeAtLocation(location: Node, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter): void;
         writeReturnTypeOfSignatureDeclaration(signatureDeclaration: SignatureDeclaration, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter): void;

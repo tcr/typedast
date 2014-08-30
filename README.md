@@ -1,14 +1,15 @@
-# typedacorn
+# typedast
 
-The acorn.js parser, but using **ALL OF TYPESCRIPT** to analyze and give types to AST nodes.
+Use all of TypeScript to infor your types!
 
 ```js
-var typedacorn = require('typedacorn');
-var acorn = typedacorn.acorn; // optional
-var walk = typedacorn.walk; // optional
+var typedast = require('typedast');
+var fs = require('fs');
 
-typedacorn.parse('hello.ts', function (err, ast) {
-	console.log(ast); // look for `datatype` properties of AST nodes!
+typedast.compile(fs.readFileSync('file.ts'), function (err, result) {
+	result.javascript; // parse this
+	result.getType; // call getType(node) to get a type for an AST node!
+	result.types; // for debug
 })
 ```
 

@@ -1970,8 +1970,9 @@ module ts {
 
             function emitNode(node: Node) {
 
-if (node) {
-  var txt:string;
+if (process.env.TYPEDAST && node) {
+  var kind:string = 'var';
+  var txt:any;
   var unwidenedType = resolver.checkExpression(node);
   var type = resolver.getWidenedType(unwidenedType);
   if (type.symbol) {
@@ -1983,7 +1984,172 @@ if (node) {
   }
   var startline = writer.getLine();
   var startcolumn = writer.getColumn();
+
+  switch (node.kind) {
+    case SyntaxKind.FunctionDeclaration:
+    case SyntaxKind.FunctionExpression:
+    case SyntaxKind.ArrowFunction:
+        kind = 'function';
+        // emitTypeParameters(node.typeParameters);
+        var fnnode = <FunctionDeclaration> node;
+
+        txt = fnnode.parameters.map(function (param) {
+            if (param.flags & NodeFlags.Rest) {
+                return "...";
+            }
+
+            var localwriter = createTextWriter(writeSymbol);
+            // return JSON.stringify(resolver.getSymbolOfNode(param));
+            resolver.writeTypeAtLocation(param, node, TypeFormatFlags.UseTypeOfFunction, localwriter);
+            if (localwriter.getText() == '') {
+                return resolver.getTypeOfSymbol(param.symbol).symbol.name
+            }
+            return localwriter.getText();
+
+            // if (param.initializer || (param.flags & NodeFlags.QuestionMark)) {
+            //     out += "?";
+            // }
+        });
+
+        var localwriter = createTextWriter(writeSymbol);
+        var signature = resolver.getSignatureFromDeclaration(<SignatureDeclaration> node);
+        var rettype = resolver.getReturnTypeOfSignature(signature);
+          if (rettype.symbol) {
+            txt.unshift(rettype.symbol.name);
+          } else {
+            resolver.writeTypeToTextWriter(rettype, node, TypeFormatFlags.UseTypeOfFunction, localwriter);
+            txt.unshift(localwriter.getText());
+          }
+        break;
+  }
 }
+
+  /*
+
+            function emitParameterDeclaration(node: ParameterDeclaration) {
+                increaseIndent();
+                emitJsDocComments(node);
+                if (node.flags & NodeFlags.Rest) {
+                    write("...");
+                }
+                emitSourceTextOfNode(node.name);
+                if (node.initializer || (node.flags & NodeFlags.QuestionMark)) {
+                    write("?");
+                }
+                decreaseIndent();
+
+                if (!(node.parent.flags & NodeFlags.Private)) {
+                    write(": ");
+                    getSymbolVisibilityDiagnosticMessage = getParameterDeclarationTypeVisibilityError;
+                    resolver.writeTypeAtLocation(node, enclosingDeclaration, TypeFormatFlags.UseTypeOfFunction, writer);
+                }
+
+
+                if (node.kind === SyntaxKind.CallSignature || node.kind === SyntaxKind.IndexSignature) {
+                    // Only index and call signatures are emitted directly, so emit their js doc comments, rest will do that in their own functions
+                    emitJsDocComments(node);
+                }
+                emitTypeParameters(node.typeParameters);
+                if (node.kind === SyntaxKind.IndexSignature) {
+                    write("[");
+                }
+                else {
+                    write("(");
+                }
+
+                // Parameters
+                emitCommaList(node.parameters, emitParameterDeclaration);
+
+                if (node.kind === SyntaxKind.IndexSignature) {
+                    write("]");
+                }
+                else {
+                    write(")");
+                }
+
+                // If this is not a constructor and is not private, emit the return type
+                if (node.kind !== SyntaxKind.Constructor && !(node.flags & NodeFlags.Private)) {
+                    write(": ");
+                    getSymbolVisibilityDiagnosticMessage = getReturnTypeVisibilityError;
+                    resolver.writeReturnTypeOfSignatureDeclaration(node, enclosingDeclaration, TypeFormatFlags.UseTypeOfFunction, writer);
+
+
+                function emitTypeParameter(node: TypeParameterDeclaration) {
+                    function getTypeParameterConstraintVisibilityError(symbolAccesibilityResult: SymbolAccessiblityResult) {
+                        // Type parameter constraints are named by user so we should always be able to name it
+                        var diagnosticMessage: DiagnosticMessage;
+                        switch (node.parent.kind) {
+                            case SyntaxKind.ClassDeclaration:
+                                diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                Diagnostics.Type_parameter_0_of_exported_class_has_or_is_using_name_1_from_private_module_2 :
+                                Diagnostics.Type_parameter_0_of_exported_class_has_or_is_using_private_name_1;
+                                break;
+
+                            case SyntaxKind.InterfaceDeclaration:
+                                diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                Diagnostics.Type_parameter_0_of_exported_interface_has_or_is_using_name_1_from_private_module_2 :
+                                Diagnostics.Type_parameter_0_of_exported_interface_has_or_is_using_private_name_1;
+                                break;
+
+                            case SyntaxKind.ConstructSignature:
+                                diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                Diagnostics.Type_parameter_0_of_constructor_signature_from_exported_interface_has_or_is_using_name_1_from_private_module_2 :
+                                Diagnostics.Type_parameter_0_of_constructor_signature_from_exported_interface_has_or_is_using_private_name_1;
+                                break;
+
+                            case SyntaxKind.CallSignature:
+                                diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                Diagnostics.Type_parameter_0_of_call_signature_from_exported_interface_has_or_is_using_name_1_from_private_module_2 :
+                                Diagnostics.Type_parameter_0_of_call_signature_from_exported_interface_has_or_is_using_private_name_1;
+                                break;
+
+                            case SyntaxKind.Method:
+                                if (node.parent.flags & NodeFlags.Static) {
+                                    diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                    Diagnostics.Type_parameter_0_of_public_static_method_from_exported_class_has_or_is_using_name_1_from_private_module_2 :
+                                    Diagnostics.Type_parameter_0_of_public_static_method_from_exported_class_has_or_is_using_private_name_1;
+                                }
+                                else if (node.parent.parent.kind === SyntaxKind.ClassDeclaration) {
+                                    diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                    Diagnostics.Type_parameter_0_of_public_method_from_exported_class_has_or_is_using_name_1_from_private_module_2 :
+                                    Diagnostics.Type_parameter_0_of_public_method_from_exported_class_has_or_is_using_private_name_1;
+                                }
+                                else {
+                                    diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                    Diagnostics.Type_parameter_0_of_method_from_exported_interface_has_or_is_using_name_1_from_private_module_2 :
+                                    Diagnostics.Type_parameter_0_of_method_from_exported_interface_has_or_is_using_private_name_1;
+                                }
+                                break;
+
+                            case SyntaxKind.FunctionDeclaration:
+                                diagnosticMessage = symbolAccesibilityResult.errorModuleName ?
+                                Diagnostics.Type_parameter_0_of_exported_function_has_or_is_using_name_1_from_private_module_2 :
+                                Diagnostics.Type_parameter_0_of_exported_function_has_or_is_using_private_name_1;
+                                break;
+
+                            default:
+                                Debug.fail("This is unknown parent for type parameter: " + SyntaxKind[node.parent.kind]);
+                        }
+
+                        return {
+                            diagnosticMessage: diagnosticMessage,
+                            errorNode: node,
+                            typeName: node.name
+                        };
+                    }
+
+                    increaseIndent();
+                    emitJsDocComments(node);
+                    decreaseIndent();
+                    emitSourceTextOfNode(node.name);
+                    // If there is constraint present and this is not a type parameter of the private method emit the constraint
+                    if (node.constraint && (node.parent.kind !== SyntaxKind.Method || !(node.parent.flags & NodeFlags.Private))) {
+                        write(" extends ");
+                        getSymbolVisibilityDiagnosticMessage = getTypeParameterConstraintVisibilityError;
+                        resolver.writeTypeAtLocation(node.constraint, enclosingDeclaration, TypeFormatFlags.UseTypeOfFunction, writer);
+                    }
+                }
+*/
 
               var ret = (function () {
                 if (!node || node.flags & NodeFlags.Ambient) return;
@@ -2102,8 +2268,9 @@ if (node) {
 
             })();
 
-if (node) {
+if (process.env.TYPEDAST && node) {
 console.log(JSON.stringify({
+    kind: kind,
   type: txt,
   start: {line: startline, column: startcolumn },
   end: {line: writer.getLine(), column: writer.getColumn() }

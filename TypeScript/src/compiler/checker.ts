@@ -7115,7 +7115,6 @@ module ts {
         function writeTypeAtLocation(location: Node, enclosingDeclaration: Node, flags: TypeFormatFlags, writer: TextWriter) {
             // Get type of the symbol if this is the valid symbol otherwise get type at location
             var symbol = getSymbolOfNode(location);
-            console.log('--->symbol?', symbol);
             var type = symbol && !(symbol.flags & SymbolFlags.TypeLiteral) ? getTypeOfSymbol(symbol) : getTypeFromTypeNode(location);
             writeTypeToTextWriter(type, enclosingDeclaration, flags, writer);
         }
@@ -7145,6 +7144,8 @@ module ts {
                 writeTypeAtLocation: writeTypeAtLocation,
                 getSymbolOfNode: getSymbolOfNode,
                 getTypeOfSymbol: getTypeOfSymbol,
+                getSignatureFromDeclaration: getSignatureFromDeclaration,
+                getReturnTypeOfSignature: getReturnTypeOfSignature,
                 getTypeFromTypeNode: getTypeFromTypeNode,
                 writeReturnTypeOfSignatureDeclaration: writeReturnTypeOfSignatureDeclaration,
                 writeSymbol: writeSymbolToTextWriter,
