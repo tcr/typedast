@@ -1,11 +1,11 @@
 {
   "name": "typedast",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "typedacorn.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "jake -f ./TypeScript/Jakefile -C ./TypeScript local > /dev/null"
+    "publish": "jake -f ./TypeScript/Jakefile -C ./TypeScript local > /dev/null"
   },
   "repository": "tcr/typedast",
   "author": "",
